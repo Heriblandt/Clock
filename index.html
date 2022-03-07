@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<title>clock</title>
+	<style>
+		.watch{
+			position: absolute;
+			width: 25%;
+			height: 50%;
+			background-color: lightblue;
+			border-radius: 50%;
+		}
+		.hourHandle{
+			position: relative;
+			background-color: darkgray;
+			width: 5%;
+			height: 40%;
+			top: 15%;
+			left: 47%;
+			z-index: 5;
+			transform-origin: 80% 80%;
+		}
+		.minuteHandle{
+			position: relative;
+			background-color: black;
+			width: 5%;
+			height: 50%;
+			top: -32%;
+			left: 47%;
+			z-index: 4;
+			transform-origin: 90% 90%;
+		}
+
+		.secondHandle{
+			position: relative;
+			background-color: red;
+			width: 2%;
+			height: 60%;
+			top: -84%;
+			left: 48.5%;
+			z-index: 6;
+			transform-origin: 75% 75%;
+			
+
+		}
+
+		.time{
+			position: relative;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="master">
+	<div class="watch">
+		<div class="hourHandle"></div>
+		<div class="minuteHandle"></div>
+		<div class="secondHandle"></div>
+	</div>
+</div>
+
+	<div class="time"></div>
+
+	<script>
+		$(document).ready(function(){
+			//alert("ready"); // VIRKER
+			var dt = new Date();
+var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+//document.write(time);
+$(".time").text(time);
+		var hour = dt.getHours();
+		var secondsLeft = 60 - dt.getSeconds();
+		var secondsDegree = 360 / 60 * dt.getSeconds();
+		var minuteDegree = 360 / 60 * dt.getMinutes();
+		var hourDegree = 360 / 12 * dt.getHours();
+		
+		if (minuteDegree >= 90) {
+			hourDegree += 7;
+		}
+
+		if (minuteDegree >= 180) {
+			hourDegree += 7;
+		}
+
+		if (minuteDegree >= 270) {
+			hourDegree += 7
+		}
+		
+			
+			$(".secondHandle").css({'transform' : 'rotate(' + secondsDegree +'deg)'});
+			$(".minuteHandle").css({'transform' : 'rotate(' + minuteDegree +'deg)'});
+			$(".hourHandle").css({'transform' : 'rotate(' + hourDegree +'deg)'});
+
+			//$(".secondHandle").css({'transform' : 'rotate('+ secondsLeft+'deg)'});
+		goAround();
+
+		});
+
+		function goAround(){
+			$( ".secondHandle" ).css({'transform': 'rotate(360deg)', 'transition': '60s', 'transition-timing-function': 'linear'});
+		}
+
+		/*
+		URET MANGLER AT PÅBEGYNDE TIDSVISNINGEN. PT BLIVER VISERNE SAT KORREKT, MEN STÅR STILLE.
+		DE BEVÆGER SIG KUN VED GENINDLÆSNING :(
+		*/
+
+
+
+	</script>
+
+</body>
+</html>
